@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from 'react-router';
+import { Form, Link } from 'react-router';
 
 
 
@@ -35,6 +35,9 @@ const Login = () => {
                             <div><a className="link link-hover">Forgot password?</a></div>
                             <button className="btn btn-secondary mt-4">Login</button>
                         </Form>
+                        <p className='ml-4 mb-4'>
+                            New to this website? Please <Link className='text-blue-600' to="/register">Register</Link>
+                        </p>
                     </div>
                 </div>
             </div>
