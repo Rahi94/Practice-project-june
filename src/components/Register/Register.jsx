@@ -1,15 +1,36 @@
-import React from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import React, { useState } from 'react';
 import { Form, Link } from 'react-router';
+import { auth } from '../../firebase.init';
 
 const Register = () => {
 
+    const [errorMessage, setErrorMessage] = useState('')
+
 const handleRegister = e =>{
+
+    
   e.preventDefault();
 
   const name = e.target.name.value;
   const email = e.target.email.value;
   const password = e.target.password.value;
   console.log(name,email,password)
+
+
+//   reset error message
+setErrorMessage('')
+
+//   create user with email and password
+createUserWithEmailAndPassword(auth, email, password)
+
+  .then(result=>{
+    console.log(result.user)
+  })
+  .catch(error=>{
+    console.log(error.message)
+    setErrorMessage(error.message)
+  })
 
 }
 
@@ -30,8 +51,12 @@ const handleRegister = e =>{
                             <label className="label">Password</label>
                             <input type="password" name="password" className="input" placeholder="Password" />
                             
-                            <button className="btn btn-secondary mt-4">Login</button>
+                            <button className="btn btn-secondary mt-4">Register</button>
                         </Form>
+
+                        {
+                            errorMessage && <p className='text-red-600'>{errorMessage}</p>
+                        }
                         <p className='ml-4 mb-4'>
                             Already have an account? Please <Link className='text-green-400 font-bold' to="/login">Login</Link>
                         </p>
