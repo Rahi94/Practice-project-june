@@ -1,9 +1,14 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form, Link } from 'react-router';
 import { auth } from '../../firebase.init';
+import { AuthContext } from '../../provider/AuthProvider';
 
 const Register = () => {
+
+
+    const info = useContext(AuthContext)
+    console.log(info)
 
     const [errorMessage, setErrorMessage] = useState('')
 
