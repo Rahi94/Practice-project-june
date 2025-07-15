@@ -3,9 +3,14 @@ import React, { useContext, useState } from 'react';
 import { Form, Link } from 'react-router';
 import { auth } from '../../firebase.init';
 import { AuthContext } from '../../provider/AuthProvider';
+import { GoogleAuthProvider } from "firebase/auth";
 
 const Register = () => {
-
+    
+    const provider = new GoogleAuthProvider();
+    const handleGoogleSignin = ()=>{
+        console.log('google coming!')
+    }
 
     const info = useContext(AuthContext)
     console.log(info)
@@ -62,6 +67,12 @@ createUserWithEmailAndPassword(auth, email, password)
                         {
                             errorMessage && <p className='text-red-600'>{errorMessage}</p>
                         }
+                        <p className='text-center'>Or Sign In Using </p>
+                        <div className='flex gap-3'>
+                            <button onClick={handleGoogleSignin} className='btn btn-success text-white'>Google</button>
+                            <button className='btn btn-error text-white'>Github</button>
+                            <button className='btn btn-primary'>Facebook</button>
+                        </div>
                         <p className='ml-4 mb-4'>
                             Already have an account? Please <Link className='text-green-400 font-bold' to="/login">Login</Link>
                         </p>
