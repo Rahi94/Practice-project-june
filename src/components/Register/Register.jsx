@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { Form, Link } from 'react-router';
 import { auth } from '../../firebase.init';
@@ -9,7 +9,14 @@ const Register = () => {
     
     const provider = new GoogleAuthProvider();
     const handleGoogleSignin = ()=>{
-        console.log('google coming!')
+
+     signInWithPopup(auth, provider)
+     .then((result)=>{
+        console.log(result)
+     })
+     .catch(error =>{
+        console.log(error)
+     })
     }
 
     const info = useContext(AuthContext)
