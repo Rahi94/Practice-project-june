@@ -90,17 +90,41 @@ createUserWithEmailAndPassword(auth, email, password)
                         {
                             errorMessage && <p className='text-red-600'>{errorMessage}</p>
                         }
-                        <p className='text-center'>Or Sign In Using </p>
-                        <div className='flex gap-3'>
+                        {/* <p className='text-center'>Or Sign In Using </p> */}
+                        {/* <div className='flex gap-3'>
                             <button onClick={handleGoogleSignin} className='btn btn-success text-white'>Google</button>
                             <button className='btn btn-error text-white'>Github</button>
                             <button className='btn btn-primary'>Facebook</button>
                         </div>
 
-                        <div>
+                        <div className='text-center'>
+                             <button onClick={handleSignOut} className='btn btn-warning text-white'>Signout</button>
+
+                        </div> */}
+
+                       
+                       {
+                        user ?  <div className='text-center'>
                              <button onClick={handleSignOut} className='btn btn-warning text-white'>Signout</button>
 
                         </div>
+                        :
+                          
+                         <div className=''>
+                            <div className='text-center mb-3'>
+                                <p className='text-center'>Or Sign In Using </p>
+                            </div>
+                           
+                            <div className='flex gap-3 '>
+                                <button onClick={handleGoogleSignin} className='btn btn-success text-white'>Google</button>
+                            <button className='btn btn-error text-white'>Github</button>
+                            <button className='btn btn-primary'>Facebook</button>
+                            </div>
+                        </div>
+                       }
+
+
+
                         <div className='text-center text-green-400 font-bold'>
                             {user && <h3>{user.displayName}</h3>}
                         </div>
