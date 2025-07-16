@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { Form, Link } from 'react-router';
 import { auth } from '../../firebase.init';
@@ -6,16 +6,20 @@ import { AuthContext } from '../../provider/AuthProvider';
 import { GoogleAuthProvider } from "firebase/auth";
 
 const Register = () => {
+
+    const [user, setUser] = useState(null)
     
     const provider = new GoogleAuthProvider();
     const handleGoogleSignin = ()=>{
 
      signInWithPopup(auth, provider)
      .then((result)=>{
-        console.log(result)
+        console.log(result);
+        setUser(result.user)
      })
      .catch(error =>{
         console.log(error)
+        setUser(null)
      })
     }
 
@@ -51,6 +55,18 @@ createUserWithEmailAndPassword(auth, email, password)
 
 }
 
+  const handleSignOut = () =>{
+
+       signOut(auth)
+       .then(()=>{
+        console.log('sign out done!')
+        setUser(null)
+       })
+       .catch(error=>{
+        console.log(error)
+       })
+  }
+
     return (
         <div className="hero bg-base-200 min-h-screen">
             <div className="hero-content flex-col ">
@@ -79,6 +95,14 @@ createUserWithEmailAndPassword(auth, email, password)
                             <button onClick={handleGoogleSignin} className='btn btn-success text-white'>Google</button>
                             <button className='btn btn-error text-white'>Github</button>
                             <button className='btn btn-primary'>Facebook</button>
+                        </div>
+
+                        <div>
+                             <button onClick={handleSignOut} className='btn btn-warning text-white'>Signout</button>
+
+                        </div>
+                        <div className='text-center text-green-400 font-bold'>
+                            {user && <h3>{user.displayName}</h3>}
                         </div>
                         <p className='ml-4 mb-4'>
                             Already have an account? Please <Link className='text-green-400 font-bold' to="/login">Login</Link>
