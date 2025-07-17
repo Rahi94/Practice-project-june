@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GithubAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { Form, Link } from 'react-router';
 import { auth } from '../../firebase.init';
@@ -10,6 +10,10 @@ const Register = () => {
     const [user, setUser] = useState(null)
     
     const provider = new GoogleAuthProvider();
+    const githubProvider = new GithubAuthProvider();
+
+
+
     const handleGoogleSignin = ()=>{
 
      signInWithPopup(auth, provider)
@@ -52,6 +56,18 @@ createUserWithEmailAndPassword(auth, email, password)
     console.log(error.message)
     setErrorMessage(error.message)
   })
+
+}
+
+const handleGithubSignIn = () =>{
+    signInWithPopup(auth, githubProvider)
+    .then(result =>{
+        console.log(result.user);
+        setUser(result.user)
+    })
+    .catch(error =>{
+        console.log('Error',error)
+    })
 
 }
 
@@ -117,7 +133,7 @@ createUserWithEmailAndPassword(auth, email, password)
                            
                             <div className='flex gap-3 '>
                                 <button onClick={handleGoogleSignin} className='btn btn-success text-white'>Google</button>
-                            <button className='btn btn-error text-white'>Github</button>
+                            <button onClick={handleGithubSignIn} className='btn btn-error text-white'>Github</button>
                             <button className='btn btn-primary'>Facebook</button>
                             </div>
                         </div>
@@ -126,7 +142,17 @@ createUserWithEmailAndPassword(auth, email, password)
 
 
                         <div className='text-center text-green-400 font-bold'>
-                            {user && <h3>{user.displayName}</h3>}
+                            {user &&
+                            
+                            <>
+                            <h3>{user.displayName}
+                            
+                            </h3>
+                            <h3>{user.photoURL}</h3>
+                            
+                            </>
+                            
+                            }
                         </div>
                         <p className='ml-4 mb-4'>
                             Already have an account? Please <Link className='text-green-400 font-bold' to="/login">Login</Link>
